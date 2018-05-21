@@ -1,0 +1,29 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Codice Dispositivo</th>
+            <th>Data di login</th> 
+            <th>Latitudine</th>
+            <th>Longitudine</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for forno in forno_list %}
+        <tr>
+            <th> { forno.codDispositivo }</th>
+            <td> { forno.login }</td>
+            <td> { forno.posizione.lat }</td>
+            <td> { forno.posizione.long }</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
