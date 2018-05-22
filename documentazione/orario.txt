@@ -1,0 +1,9 @@
+30/04 - 10.30/12.30 		  - Incontro organizzativo e presentazione del progetto di tirocinio
+03/05 - 09.00/12.30 		  - Analisi del problema e sviluppo di prime soluzioni
+07/05 - 15.30/18.30 		  - Continuazione dell'analisi e sviluppo cominciato in data 03/05
+08/05 - 09.00/12.30 + 14.15/18.15 - Costruzione di grafici per la descrizione del sistema, analisi di possibili 
+                                    database da utilizzare e scelta della piattaforma su cui operare
+15/05 - 09.00/12.30 + 14.15/18.15 - Studio e inizializzazione del database del sistema
+21/05 - 15.00/18.30		  - Lavoro su un'applicazione python per l'interfacciamento con il database
+
+Totale ore:	27.00h
