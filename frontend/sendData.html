@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invia i dati</title>
+</head>
+
+<body>
+    <form method="post" action="http://192.168.99.100:8000/gpsData/">
+        <fieldset>
+            <legend> Dati del dispositvo </legend>
+            <label for="lat">Latitudine: </label>
+            <input type="text" name="lat" id="lat" />
+            <br />
+            <label for="long">Longitudine: </label>
+            <input type="text" name="long" id="long" />
+            <br />
+            <input type="submit" />
+        </fieldset>
+    </form>
+</body>
+</html>
