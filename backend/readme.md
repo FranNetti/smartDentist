@@ -1,4 +1,4 @@
-# Folder del programma
+# Folder del programma backend
 
 ## Prerequisito
 
