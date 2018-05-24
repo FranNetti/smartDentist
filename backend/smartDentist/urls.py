@@ -19,6 +19,7 @@ from django.contrib import admin
 import app.views
 
 urlpatterns = [
+    url(r'^$', app.views.home, name="home"),
     url(r'^admin/', admin.site.urls),
-    url(r'ciao/', app.views.ciao)
+    url(r'^ciao/', app.views.ciao, name="ciao")
 ]
