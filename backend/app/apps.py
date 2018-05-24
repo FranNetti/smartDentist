@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class AppConfig(AppConfig):
-    name = 'app'
+class EndPointConfig(AppConfig):
+    name = 'smartDentist'
+    verbose_name = "Smart Dentist End-Point"
