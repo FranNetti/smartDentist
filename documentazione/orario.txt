@@ -7,5 +7,7 @@
 21/05 - 15.00/18.30		  - Lavoro su un'applicazione python per l'interfacciamento con il database
 22/05 - 09.00/13.45 + 15.45/18.15 - Cambio di struttura del sistema, studio dell'ambiente
 24/05 - 09.00/12.00               - Lavoro su pagine web per la parte di endpoint del sistema
+29/05 - 09.00/12.45 + 14.15/18.30 - interfacciamento al database, programma frontend per inviare dati, rifattorizzazione
 
-Totale ore:	37.15h
+Totale ore:	45.15h
+
