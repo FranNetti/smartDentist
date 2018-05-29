@@ -1,3 +1,5 @@
 .*
 
+*.pyproj
+*.sln
 !.gitignore
