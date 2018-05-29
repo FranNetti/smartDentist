@@ -5,12 +5,12 @@
 Se nella cartella non sono presenti il file manage.py e la cartella smartDentist, digitare
 
 ```
-sudo docker-compose run web django-admin.py startproject smartDentist .
+docker-compose run web django-admin.py startproject smartDentist .
 ```
 
 ## Esecuzione del programma
 
-Per fare partire la prova, digitare
+Per fare partire il sistema, digitare
 
 ```
 docker-compose up
@@ -27,3 +27,20 @@ in
 > ALLOWED_HOSTS['*']
 > ```
 
+
+
+## Interazione con il db
+
+Per creare la tabella del database dal relativo modello presente in models.py digitare il seguente comando:
+
+```
+docker-compose run web migrate
+```
+
+Ad ogni modifica dentro al file prima nominato,  prima digitare
+
+```
+docker-compose run web makemigrations <<nome dell'app preso da apps.py>>
+```
+
+dopo di che digitare il primo comando di questo capitolo.

@@ -16,11 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-import app.views
+import smartDentistEP.views as views
 
 urlpatterns = [
-    url(r'^$', app.views.home, name="home"),
+    url(r'^$', views.home, name="home"),
     url(r'^admin/', admin.site.urls),
-    url(r'^ciao/', app.views.ciao, name="ciao"),
-    url(r'^gpsData/', app.views.setGpsData, name="gpsData"),
+    url(r'^ciao/', views.ciao, name="ciao"),
+    url(r'^gpsData/', views.setGpsData, name="gpsData"),
 ]
