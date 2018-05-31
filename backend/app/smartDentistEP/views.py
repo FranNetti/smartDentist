@@ -1,23 +1,25 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
-
-# Create your views here.
-
-def ciao(request):
-    assert isinstance(request, HttpRequest)
-    return HttpResponse("Ciao, mi chiamo smartDentist project")
+from .receiver import ReceiveDataDevice
+from .controller import DbrController
+from .models import Device
 
 def home(request):
     assert isinstance(request, HttpRequest)
     return HttpResponse("")
 
+def ciao(request):
+    assert isinstance(request, HttpRequest)
+    return HttpResponse("Ciao, mi chiamo smartDentist project")
+
 def setGpsData(request):
-    from .models import ReceiveData
     assert isinstance(request, HttpRequest)
     if request.method == 'POST':
-        elem = ReceiveData(request.POST)
-        elem.processData()
-        elem.printData()            
+        recv = ReceiveDataDevice()
+        ctr = DbrController()
+        recv.processData(request.POST)
+        ctr.saveData(Device.__class__, recv.getAllInformations())
+        recv.printData()
     return HttpResponse("")
 
 
