@@ -8,6 +8,7 @@
 22/05 - 09.00/13.45 + 15.45/18.15 - Cambio di struttura del sistema, studio dell'ambiente
 24/05 - 09.00/12.00               - Lavoro su pagine web per la parte di endpoint del sistema
 29/05 - 09.00/12.45 + 14.15/18.30 - interfacciamento al database, programma frontend per inviare dati, rifattorizzazione
+31/05 - 09.00/12.15
 
-Totale ore:	45.15h
+Totale ore:	48.30h
 
