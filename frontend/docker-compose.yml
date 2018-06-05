@@ -1,8 +1,16 @@
 version: '3'
 
 services:
-  web:
+  receiver:
     build: .
-    command: python3 app/smartDentistFE.py 10
+    command: app/smartDentistBroker/script.sh
+    ports:
+      - "56789:56789"
+    volumes:
+      - .:/code
+
+  forn1:
+    build: .
+    command: python3 app/smartDentistForno/smartDentistForno.py 10
     volumes:
       - .:/code

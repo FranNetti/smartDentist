@@ -1,8 +1,7 @@
-import string
 import datetime
 
 from abc import ABCMeta, abstractclassmethod
-from random import uniform, choice
+from random import uniform
 
 class IRetriever:
     __metaclass__ = ABCMeta
@@ -13,16 +12,15 @@ class IRetriever:
 
 
 class RandomRtv(IRetriever):
+
     
-    def getData(self):
-        id = ''.join(choice(string.ascii_uppercase + string.digits) for _ in range(20))
+    def getData(self):      
         lat = uniform(0,90)
         long = uniform(0,180)
         doct_name = "Daniel"
         doct_surname = "Ricciardo"
         data = datetime.datetime.utcnow()
         return {
-            'id': id,
             'lat': lat,
             'long' : long,
             'doct_name' : doct_name,
