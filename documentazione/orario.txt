@@ -9,6 +9,7 @@
 24/05 - 09.00/12.00               - Lavoro su pagine web per la parte di endpoint del sistema
 29/05 - 09.00/12.45 + 14.15/18.30 - interfacciamento al database, programma frontend per inviare dati, rifattorizzazione
 31/05 - 09.00/12.15
+05/06 - 14.30/18.30 
 
-Totale ore:	48.30h
+Totale ore:	52.30h
 
