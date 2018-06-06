@@ -19,3 +19,19 @@ services:
       - .:/code
     depends_on:
       - msg_broker
+
+  forn2:
+    build: .
+    command: python3 app/smartDentistForno/smartDentistForno.py 15
+    volumes:
+      - .:/code
+    depends_on:
+      - msg_broker
+
+  forn3:
+    build: .
+    command: python3 app/smartDentistForno/smartDentistForno.py 17
+    volumes:
+      - .:/code
+    depends_on:
+      - msg_broker

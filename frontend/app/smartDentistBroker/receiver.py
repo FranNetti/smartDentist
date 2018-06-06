@@ -16,6 +16,7 @@ class MsgReceiver(IReceiver, CallbackHandler, Thread):
     def __init__(self, readData):
         self.action = readData
         self.rabbitRcv = RabbitMqHandler("msg_broker")
+        Thread.__init__(self)
 
     def run(self):
         while True:

@@ -22,7 +22,7 @@ def addNewPublisherData(data):
     list.put(elem, timeout = wait_time)
 
 rcv = MsgReceiver(addNewPublisherData)
-rcv.run()
+rcv.start()
 
 while True:
     # get the item from the queue, if empty wait until it isn't anymore
@@ -35,5 +35,6 @@ while True:
         time.sleep(1)
         result = sender.sendData(url = url, info = data)
         x += 1
+    list.task_done()
 
 
