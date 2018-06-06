@@ -1,6 +1,8 @@
 from abc import ABCMeta, abstractclassmethod
 from threading import Thread
 from rabbitMqHandler import RabbitMqHandler, CallbackHandler
+from pika.exceptions import ConnectionClosed
+from logger import FileLogger
 
 class IReceiver:
     __metaclass__ = ABCMeta
@@ -12,10 +14,12 @@ class MsgReceiver(IReceiver, CallbackHandler, Thread):
 
     action = None
     rabbitRcv = None
+    logger = None
     
     def __init__(self, readData):
         self.action = readData
-        self.rabbitRcv = RabbitMqHandler("msg_broker")
+        self.rabbitRcv = self.createConnection()
+        self.logger = FileLogger("brokerLog.txt")
         Thread.__init__(self)
 
     def run(self):
@@ -31,6 +35,14 @@ class MsgReceiver(IReceiver, CallbackHandler, Thread):
         ch.basic_ack(delivery_tag = method.delivery_tag)
 
     def getData(self):
-        self.rabbitRcv.getMsg(self)
+        try:
+            self.rabbitRcv.getMsg(self)
+            # if the connection interrupts, log what happend
+            # and recreate the connection
+        except ConnectionClosed as e:
+                del self.rabbitRcv
+                self.logger.log("Connection interrupted with RabbitMq")
+                self.rabbitRcv = self.createConnection()
 
-
+    def createConnection(self):
+        return RabbitMqHandler("msg_broker")

@@ -13,7 +13,6 @@ class RabbitMqHandler:
 
     hostName = ""
     queue_name = "forno"
-    retry_times = 10
     wait_time = 5
 
     # since rabbitMq could not be ready when initializing this class,
@@ -22,17 +21,13 @@ class RabbitMqHandler:
     # after a certain time though, it raise an exception
     def __init__(self, hostName):
         self.hostName = hostName
-        x = 0
-        while x < self.retry_times:
+        while True:
             try:
                 conn = pika.BlockingConnection(pika.ConnectionParameters(hostName))
                 conn.close()
                 break
             except ConnectionClosed as e:
                 time.sleep(self.wait_time)
-                x += 1
-        if x >= self.retry_times:
-            raise ConnectionClosed()
 
     def sendMsg(self, msg):
         conn = pika.BlockingConnection(pika.ConnectionParameters(self.hostName))
