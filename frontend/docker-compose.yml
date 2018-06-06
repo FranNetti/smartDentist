@@ -1,16 +1,21 @@
 version: '3'
 
 services:
-  receiver:
+  msg_broker:
+    image: rabbitmq
+
+  broker:
     build: .
-    command: app/smartDentistBroker/script.sh
-    ports:
-      - "56789:56789"
+    command: python3 app/smartDentistBroker/smartDentistBroker.py
     volumes:
       - .:/code
+    depends_on:
+      - msg_broker
 
   forn1:
     build: .
     command: python3 app/smartDentistForno/smartDentistForno.py 10
     volumes:
       - .:/code
+    depends_on:
+      - msg_broker

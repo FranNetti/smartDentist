@@ -8,19 +8,20 @@ class IRetriever:
 
     # info = a dict with all the informations that you want to send to the given url
     @abstractclassmethod
-    def getData(self): raise NotImplementedError
+    def getData(self, id): raise NotImplementedError
 
 
 class RandomRtv(IRetriever):
 
     
-    def getData(self):      
+    def getData(self, id):      
         lat = uniform(0,90)
         long = uniform(0,180)
         doct_name = "Daniel"
         doct_surname = "Ricciardo"
         data = datetime.datetime.utcnow()
         return {
+            'id' : id,
             'lat': lat,
             'long' : long,
             'doct_name' : doct_name,
