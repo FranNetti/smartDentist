@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from .receiver import ReceiveDataDevice
-from .controller import DbrController
+from .controller import DbrController, LogStashController
 from .models import Device
 
 def home(request):
@@ -16,9 +16,11 @@ def setGpsData(request):
     assert isinstance(request, HttpRequest)
     if request.method == 'POST':
         recv = ReceiveDataDevice()
-        ctr = DbrController()
+        dbCtr = DbrController()
+        lsCtr = LogStashController()
         recv.processData(request.POST)
-        ctr.saveData(Device.__class__, recv.getAllInformations())
+        dbCtr.saveData(Device.__class__, recv.getAllInformations())
+        lsCtr.saveData(recv.getAllInformations())
         recv.printData()
     return HttpResponse("")
 

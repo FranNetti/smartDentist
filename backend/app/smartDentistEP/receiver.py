@@ -67,10 +67,10 @@ class ReceiveDataDevice(IReceiveData):
                 doct_name = value
             elif field == "doct_surn":
                 doct_surn = value
-            elif (field != "lat" and field != "long"):
+            elif (field != "lat" and field != "long" and field != "id"):
                 self.other[field] = value
         # I can create a doctor only if I have both his name and surname
-        if doct_name and doct_surn:
+        if doct_name and doct_surn and doct_date:
             self.doct = DoctorField(doct_name, doct_surn)
 
     def printData(self):

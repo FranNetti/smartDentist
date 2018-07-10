@@ -44,3 +44,27 @@ docker-compose run web python app/manage.py makemigrations <<nome dell'app preso
 ```
 
 dopo di che digitare il primo comando di questo capitolo.
+
+
+
+## Possibile errore con la java virtual machine
+
+Se il programma richiede troppa memoria, fare le seguenti operazioni:
+
+### Windows
+
+Collegarsi alla docker machine con
+
+```
+docker-machine ssh
+```
+
+dopo di che inserire il seguente comando
+
+```
+sudo sysctl -w vm.max_map_count=262144
+```
+
+### Linux
+
+Eseguire direttamente il secondo comando nella sezione windows

@@ -65,6 +65,33 @@ DATABASES = {
     }
 }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'handlers': {
+        'logstash': {
+            'level': 'DEBUG',
+            'class': 'logstash.TCPLogstashHandler',
+            'host': 'logstash',
+            'port': 5959,
+            'version': 1,
+            'message_type': 'logstash',
+            'fqdn': False,
+            'tags': None,
+        },
+    },
+
+    'loggers': {
+        'django.request': {
+            'handlers': ['logstash'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

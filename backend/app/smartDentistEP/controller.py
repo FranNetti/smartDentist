@@ -1,3 +1,6 @@
+import logging
+import logstash
+
 from abc import ABCMeta, abstractclassmethod
 from .models import *
 
@@ -10,7 +13,7 @@ class IDbController:
     def saveData(self, model, dict): raise NotImplementedError
 
 
-# Class for a controller that manage a relational db
+# Class for a controller that manages a relational db
 class DbrController(IDbController):
     
     def saveData(self, model, info):
@@ -20,3 +23,22 @@ class DbrController(IDbController):
             device = Device(device_id = id, lat = pos.lat, long = pos.long)
             device.save()
 
+# Class for a controller that loads data into the logstash
+class LogStashController():
+
+    def saveData(self, info):
+
+        host = 'logstash'
+
+        test_logger = logging.getLogger('python-logstash-logger')
+        test_logger.setLevel(logging.INFO)
+        #test_logger.addHandler(logstash.LogstashHandler(host, 5959, version=1))
+        test_logger.addHandler(logstash.TCPLogstashHandler(host, 5959, version=1))
+
+        # add extra field to logstash message
+        extra = {
+            'device_id': info["id"],
+            'latitudine': info["pos"].lat,
+            'longitudine': info["pos"].long
+        }
+        test_logger.info('Nuova posizione', extra=extra)

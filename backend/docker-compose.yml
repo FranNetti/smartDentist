@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
   db_postgres:
@@ -12,13 +12,114 @@ services:
       - "8000:8000"
     depends_on:
       - db_postgres
-  web_app:
-    image: metabase/metabase:latest
-    ports:
-      - "3000:3000"
+      - logstash
+# index, search & agregation
+  
+  elasticsearch:
+
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+
+    container_name: elastic
+
     environment:
-      - MB_DB_TYPE=postgres
-      - MB_DB_DBNAME=postgres
-      - MB_DB_PORT=5432
-      - MB_DB_USER=postgres
-      - MB_DB_HOST=db_postgres
+
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+
+    ports:
+
+      - 9200:9200
+
+      - 9300:9300
+
+    volumes:
+
+      - ./elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+
+      - logging
+
+# UI
+
+  kibana:
+
+    image: docker.elastic.co/kibana/kibana:6.2.4
+
+    container_name: kibana
+
+    ports:
+
+      - 5601:5601
+
+    volumes:
+
+      - ./elk/kibana/config/kibana.yml:/etc/kibana/kibana.yml
+
+    networks:
+
+      - logging
+
+    depends_on:
+
+      - elasticsearch
+      
+  
+# indexer
+
+  logstash:
+
+    image: docker.elastic.co/logstash/logstash:6.2.4
+
+    container_name: logstash
+
+    command: logstash -f /config/
+
+    environment:
+
+      - JAVA_OPTS=-Xms1g -Xmx1g
+
+    ports:
+
+     - 8085:8085
+
+    volumes:
+
+      - ./elk/logstash/config:/config
+    networks:
+
+      - logging
+
+    depends_on:
+
+      - elasticsearch
+
+  apmserver:
+
+    image: docker.elastic.co/apm/apm-server:6.2.4
+
+    container_name: apmserver
+
+    ports:
+
+     - 8200:8200
+
+    volumes:
+
+      - ./elk/apmserver/config/apm-server.yml:/usr/share/apm-server/apm-server.yml
+
+    networks:
+
+      - logging
+
+    depends_on:
+
+      - elasticsearch
+    
+
+  
+networks:
+
+    logging:
+      driver: bridge
+
+
+
