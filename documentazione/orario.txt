@@ -16,7 +16,7 @@
                                     webapp per l'interazione e la visualizzazione dei dati sul database
 (60.15)----------------------------------------------------------
 
-10/07 - 09.00/13.00 + 
-
-Totale ore:	60.15h
+10/07 - 09.00/13.00 + 14.30/18.30 - Aggiunta di un servizio per il frontend dove il forno è realizzato tramite una pagina html;
+                                    integrazione del nel backend di elastic search,kibana e logstash per la realizzazione di una webApp
+Totale ore:	68.15h
 
