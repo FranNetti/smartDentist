@@ -17,6 +17,6 @@ class DbrController(IDbController):
         if model == Device.__class__ :
             id = info["id"]
             pos = info["pos"]
-            device = Device(id = id, lat = pos.lat, long = pos.long)
+            device = Device(device_id = id, lat = pos.lat, long = pos.long)
             device.save()
 

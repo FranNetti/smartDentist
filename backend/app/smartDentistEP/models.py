@@ -1,5 +1,4 @@
 from django.db import models
-import datetime
 
 # Class that identifies the table Doctor inside the database
 class Doctor(models.Model):
@@ -12,10 +11,11 @@ class Doctor(models.Model):
 
 # Class that identifies the table Device inside the database
 class Device(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
+    device_id = models.CharField(max_length=100)
+    time = models.DateTimeField(auto_now_add=True)
     lat = models.DecimalField(max_digits = 7, decimal_places = 5)
     long = models.DecimalField(max_digits = 8, decimal_places = 5)
     dr = models.ForeignKey(Doctor, on_delete = models.SET_NULL, null = True)
 
     def __str__(self):
-        return "Device: {} | lat: {} - long: {}".format(self.id,self.lat,self.long)
+        return "Device: {} | lat: {} - long: {}".format(self.device_id,self.lat,self.long)
