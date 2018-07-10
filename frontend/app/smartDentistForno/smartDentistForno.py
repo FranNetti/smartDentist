@@ -8,12 +8,12 @@ from random import choice
 
 args = sys.argv
 if (len(args) != 2):
-    print("Inserire un numero di secondi per indicare quanto aspettare fra un invio e l'altro", file=sys.stderr)
+    print("Inserire un numero di minuti per indicare quanto aspettare fra un invio e l'altro", file=sys.stderr)
     sys.exit(1) 
 
 id = ''.join(choice(string.ascii_uppercase + string.digits) for _ in range(20))
 
-waitTime = int(args[1])
+waitTime = int(args[1]) * 60;
 rtv = RandomRtv()
 sender = MsgSender()
 

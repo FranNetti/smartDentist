@@ -30,8 +30,16 @@ services:
 
   forn3:
     build: .
-    command: python3 app/smartDentistForno/smartDentistForno.py 17
+    command: python3 app/smartDentistForno/smartDentistForno.py 25
     volumes:
       - .:/code
     depends_on:
       - msg_broker
+
+  fornHTTP:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/code
+      - ./site.conf:/etc/nginx/conf.d/default.conf
