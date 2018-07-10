@@ -1,6 +1,6 @@
 30/04 - 10.30/12.30 		  - Incontro organizzativo e presentazione del progetto di tirocinio
 03/05 - 09.00/12.30 		  - Analisi del problema e sviluppo di prime soluzioni
-07/05 - 15.30/18.30 		  - Continuazione dell'analisi e sviluppo cominciato in data 03/05
+07/05 - 15.30/18.30 		  - Continuo dell'analisi e sviluppo cominciato in data 03/05
 08/05 - 09.00/12.30 + 14.15/18.15 - Costruzione di grafici per la descrizione del sistema, analisi di possibili 
                                     database da utilizzare e scelta della piattaforma su cui operare
 15/05 - 09.00/12.30 + 14.15/18.15 - Studio e inizializzazione del database del sistema
@@ -8,8 +8,15 @@
 22/05 - 09.00/13.45 + 15.45/18.15 - Cambio di struttura del sistema, studio dell'ambiente
 24/05 - 09.00/12.00               - Lavoro su pagine web per la parte di endpoint del sistema
 29/05 - 09.00/12.45 + 14.15/18.30 - interfacciamento al database, programma frontend per inviare dati, rifattorizzazione
-31/05 - 09.00/12.15
-05/06 - 14.30/18.30 
+31/05 - 09.00/12.15               - terminazione del lavoro iniziato in data 29/05
+05/06 - 14.30/18.30               - creazione di due servizi per il frontend per realizzare un'architettura pub-sub:
+                                    uno per acquisire dati ed inserirli in una coda rabbitMq e 
+                                    l'altro per prelevarli e poi inviarli al server di backend
+06/06 - 09.00/12.45 + 14.30/18.30 - terminazione del lavoro iniziato in data 5/06, sviluppo di una
+                                    webapp per l'interazione e la visualizzazione dei dati sul database
+(60.15)----------------------------------------------------------
 
-Totale ore:	52.30h
+10/07 - 09.00/13.00 + 
+
+Totale ore:	60.15h
 
