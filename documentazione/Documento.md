@@ -8,21 +8,21 @@ Azienda: Imola Informatica
 
 ## Introduzione
 
-Durante la mia esperienza di tirocinio a Imola Informatica sono stato assegnato ad un progetto che aveva lo scopo di realizzare un forno dentistico il quale ogni qual volta eseguisse l'accensione inviasse la sua posizione geografica ad un server per tenere traccia di tutti i suoi spostamenti durante il tempo.
+Durante la mia esperienza di tirocinio a Imola Informatica sono stato assegnato ad un progetto che aveva lo scopo di realizzare un forno dentistico il quale ogni qual volta eseguisse l'accensione inviasse la sua posizione geografica ad un server per tenere traccia di tutti i suoi spostamenti.
 
 Un forno dentistico è un macchinario che permette di riscaldare a temperature elevate, intorno ai 1300/1600 °C, dei materiali ceramici, permettendo la realizzazione di qualunque tipo di oggetto utile per lo svolgimento del lavoro di un dentista, come protesi, corone, ponti e molto altro. I prezzi variano in base alle dimensioni; per forni ben realizzati e di grosse dimensioni il costo è intorno ai 2000€.
 
-Dato che per dover comunicare la propria posizione il dispositivo deve essere in qualche modo collegato ad una rete internet (questo argomento verrà trattato meglio nei paragrafi successivi) si potrebbe sfruttare l'occasione per renderlo più smart, inviando anche dati di utilità come temperatura di utilizzo, tempo impiegato per la cottura insieme ad altri dati in modo tale da poter tenere sotto controllo il macchinario e utilizzare questi dati sotto numerosi campi:
+Dato che per dover comunicare la propria posizione il dispositivo deve essere in qualche modo collegato ad una rete internet (questo argomento verrà trattato meglio nei paragrafi successivi) si potrebbe sfruttare l'occasione per rendere l'elemento più smart, inviando anche dati di utilità come temperatura di utilizzo, tempo impiegato per la cottura insieme ad altri dati in modo tale da poter tenere sotto controllo il macchinario e utilizzare questi dati sotto numerosi campi:
 
 - da parte del costruttore per sapere cosa migliorare nelle successive versioni grazie a problematiche che si verificano frequentemente in una certa zona o sotto certe condizioni di utilizzo
 - da parte del consumatore per notare in anticipo possibili rotture e anticipare così la manutenzione, in modo tale da non rovinare il macchinario e poterlo usare più a lungo
 
 ## Tecnologie utilizzate
 
-Durante l'attività sono state viste numerose tecnologie
-Si è inizialmente optato come piattaforma di sviluppo OpenShift, un Platform as a Service per applicazioni cloud, in modo tale da poter concentrare principalmente il lavoro sullo sviluppo della applicazione, demandando alla piattaforma stessa tutto ciò che riguarda l'ambito di amministrazione del sistema. Successivamente però per facilità di replicazione su un sistema differente si è deciso di lavorare tramite tecnologia container utilizzando nello specifico Docker e Docker Compose.
-Come database per il sistema si è usato un database noSql, MongoDb.
-Lato programmazione si è usato Python per programmare sia sul frontend che sul backend dell'applicazione: nello specifico lato server si è usato Django per realizzare un server REST. Si è inoltre utilizzato sul frontend un broker collegato a un coda di messaggi di tipo RabbitMq per potere gestire l'invio di più dati in contemporanea da parte di forni diversi.
+Durante l'attività sono state viste numerose tecnologie.
+Si è inizialmente optato come piattaforma di sviluppo su OpenShift, un Platform as a Service per applicazioni cloud, in modo tale da poter concentrare principalmente il lavoro sullo sviluppo della applicazione, demandando alla piattaforma stessa tutto ciò che riguarda l'ambito di amministrazione del sistema. Successivamente però per facilità di replicazione su un sistema differente si è deciso di lavorare utilizzando i container, nello specifico si è optato per Docker e Docker Compose.
+Come database per il sistema sono stati analizzati sia database relazionali come PostgreSql che database noSql come MongoDb.
+Lato programmazione si è usato Python per programmare sia sul frontend che sul backend dell'applicazione: nello specifico lato backend si è usato il framework Django per realizzare un server REST, mentre sul frontend si è costruito un broker collegato a un coda di messaggi di tipo RabbitMq per potere gestire l'invio di più dati in contemporanea da parte di forni diversi.
 
 ## Attività
 
@@ -72,7 +72,7 @@ Il software all'interno dei forni deve essere sviluppato in due moduli: un modul
 
 
 
-#### Connessione fra l'entità composta forno e lato cliente
+#### 4. Connessione fra l'entità composta forno e lato cliente
 
 Una volta ottenuta la posizione in uno qualsiasi dei precedenti metodi, sarà compito del dispositivo comunicare i dati con una struttura apposita.
 
@@ -90,11 +90,11 @@ Una volta ottenuta la posizione in uno qualsiasi dei precedenti metodi, sarà co
 
 ### Sviluppo del sistema
 
-Lato frontend si è realizzato un container in grado di gestire un numero indefinito di forni in contemporanea, ciascuno realizzato con un servizio differente; possono essere di due tipi: un tipo è rappresentato da una semplice pagina HTML con un form che invia i dati della posizione direttamente al server di backend, mentre l'altro tipo è caratterizzato dal fatto di inviare i dati indirettamente al server passando da una coda Rabbit presente come differente servizio sempre all'interno dello stesso container.
-Il secondo tipo di forno è realizzato con due moduli interni: uno, denominato Retriever, che genera dati randomicamente in modo tale da simulare un possibile modulo GPS, ed un altro, denominato Sender, il cui compito è quello di inviare dati alla coda.
-Collegato alla coda è presente un ulteriore servizio, anch'esso scomposto in moduli in modo analogo alla struttura realizzata per i forni: è presente un modulo Receiver che aspetta che dei messaggi siano presenti sulla coda, dopo di che non appena ne è presente almeno uno lo preleva e lo consegna al secondo modulo, chiamato Sender, che invia i dati al backend attraverso messaggi HTTP.
+Lato frontend si è realizzato un container in grado di gestire un numero indefinito di forni in contemporanea, ciascuno realizzato con un servizio differente; i forni sono stati realizzati attraverso tecnologie differenti: un tipo è rappresentato da una semplice pagina HTML nella quale un form invia i dati della posizione direttamente al server di backend, mentre l'altro è caratterizzato dal fatto di inviare i dati indirettamente al server passando da una coda Rabbit presente come differente servizio sempre all'interno dello stesso container.
+La seconda tipologia di forno è costituita da tre moduli interni: il primo, denominato Retriever, che genera dati randomicamente in modo tale da simulare un possibile modulo GPS, il secondo, denominato Sender, il cui compito è quello di inviare dati alla coda, ed infine un terzo che fa da controller e gestisce gli altri due moduli andando a richiedere periodicamente i dati al Retriever dopo di che li invia tramite il Sender.
+Collegato alla coda è presente un ulteriore servizio, anch'esso scomposto in moduli in modo analogo alla struttura realizzata per i forni: è presente un modulo Receiver che aspetta che dei messaggi siano presenti sulla coda, un secondo modulo, chiamato Sender, che invia i dati al backend attraverso messaggi HTTP, ed infine un controller che aspetta di essere notificato dal Receiver della presenza di un dato nella coda e nel momento stesso in cui avviene preleva i dati e li invia al server tramite il Sender.
 
-Lato backend invece si è realizzato un server Django supportato da un database Postgres che ogni qual volta venisse contattato ad una determinata pagina tramite una POST salva nel db i dati ricevuti; per poter fornire i dati memorizzati nel db all'utente finale si è realizzata una webApp.
+Lato backend invece si è realizzato un server Django supportato da un database PostgreSql che ogni qual volta viene contattato ad una determinata pagina tramite una POST salva nel db i dati ricevuti; per poter fornire all'utente finale i dati memorizzati nel db si è realizzata una webApp.
 
 La struttura del sistema è rappresentata dalla seguente immagine, dove il numero di forni è puramente indicativo:
 
