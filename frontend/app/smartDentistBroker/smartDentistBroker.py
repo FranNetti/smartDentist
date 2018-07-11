@@ -1,13 +1,19 @@
 import time
+import sys
 from queue import Queue
 from sender import HttpPostSender
 from receiver import MsgReceiver
+
+args = sys.argv
+if (len(args) != 2):
+    print("Inserire l'indirizzo IP del server di backend", file=sys.stderr)
+    sys.exit(1) 
 
 # max wait time allowed for putting a new element in the queue
 wait_time = 3
 # number of max retransmissions for a single subscriber
 retry_times = 4
-url = "http://192.168.99.100:8000/gpsData/"
+url = "http://" + args[1] + ":8000/gpsData/"
 
 list = Queue(maxsize = 20)
 sender = HttpPostSender()

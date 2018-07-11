@@ -6,7 +6,7 @@ services:
 
   broker:
     build: .
-    command: python3 app/smartDentistBroker/smartDentistBroker.py
+    command: python3 app/smartDentistBroker/smartDentistBroker.py 192.168.99.100
     volumes:
       - .:/code
     depends_on:
