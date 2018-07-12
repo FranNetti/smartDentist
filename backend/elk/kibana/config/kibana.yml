@@ -5,3 +5,6 @@ server:
 
 elasticsearch:
   url: "http://elasticsearch:9200"
+
+logstash:
+  url: "http://logstash:8085"

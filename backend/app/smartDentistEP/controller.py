@@ -26,19 +26,21 @@ class DbrController(IDbController):
 # Class for a controller that loads data into the logstash
 class LogStashController():
 
+    logger = None
+
+    def __init__(self, hostName, port):
+        logger = logging.getLogger('python-logstash-logger')
+        logger.setLevel(logging.INFO)
+        logger.addHandler(logstash.TCPLogstashHandler(hostName, port, "smartDentistInfo", version=1))
+        self.logger = logger
+
     def saveData(self, info):
-
-        host = 'logstash'
-
-        test_logger = logging.getLogger('python-logstash-logger')
-        test_logger.setLevel(logging.INFO)
-        #test_logger.addHandler(logstash.LogstashHandler(host, 5959, version=1))
-        test_logger.addHandler(logstash.TCPLogstashHandler(host, 5959, version=1))
-
-        # add extra field to logstash message
         extra = {
             'device_id': info["id"],
             'latitudine': info["pos"].lat,
             'longitudine': info["pos"].long
         }
-        test_logger.info('Nuova posizione', extra=extra)
+        self.logger.info('Nuova posizione segnalata', extra=extra)
+
+
+

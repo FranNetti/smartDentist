@@ -17,11 +17,13 @@ def setGpsData(request):
     if request.method == 'POST':
         recv = ReceiveDataDevice()
         dbCtr = DbrController()
-        lsCtr = LogStashController()
+        lsCtr = LogStashController("logstash", 8085)
         recv.processData(request.POST)
         dbCtr.saveData(Device.__class__, recv.getAllInformations())
         lsCtr.saveData(recv.getAllInformations())
         recv.printData()
+        #print(requests.post("http://logstash:8085", data=recv.getAllInformations()))
+        
     return HttpResponse("")
 
 

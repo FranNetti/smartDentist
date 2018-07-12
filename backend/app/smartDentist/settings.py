@@ -74,7 +74,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logstash.TCPLogstashHandler',
             'host': 'logstash',
-            'port': 5959,
+            'port': 8085,
             'version': 1,
             'message_type': 'logstash',
             'fqdn': False,
