@@ -4,6 +4,10 @@ from .receiver import ReceiveDataDevice
 from .controller import DbrController, LogStashController
 from .models import Device
 
+recv = ReceiveDataDevice()
+dbCtr = DbrController()
+lsCtr = LogStashController("logstash", 8085)
+
 def home(request):
     assert isinstance(request, HttpRequest)
     return HttpResponse("")
@@ -15,9 +19,6 @@ def ciao(request):
 def setGpsData(request):
     assert isinstance(request, HttpRequest)
     if request.method == 'POST':
-        recv = ReceiveDataDevice()
-        dbCtr = DbrController()
-        lsCtr = LogStashController("logstash", 8085)
         recv.processData(request.POST)
         dbCtr.saveData(Device.__class__, recv.getAllInformations())
         lsCtr.saveData(recv.getAllInformations())
