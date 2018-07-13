@@ -15,8 +15,8 @@ class RandomRtv(IRetriever):
 
     
     def getData(self, id):      
-        lat = uniform(0,90)
-        long = uniform(0,180)
+        lat = uniform(-90,90)
+        long = uniform(-180,180)
         doct_name = "Daniel"
         doct_surname = "Ricciardo"
         data = datetime.datetime.utcnow()
