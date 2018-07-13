@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "69350330-86b3-11e8-ae3f-df16182fd2b6",
+    "_type": "search",
+    "_source": {
+      "title": "Dati dei dispositivi",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "device_id",
+        "device_position"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"62348de0-85e0-11e8-b7ff-55f3999f7e19\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[{\"meta\":{\"index\":\"62348de0-85e0-11e8-b7ff-55f3999f7e19\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"type\",\"value\":\"smartDentistInfo\",\"params\":{\"query\":\"smartDentistInfo\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"type\":{\"query\":\"smartDentistInfo\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+      }
+    }
+  }
+]
