@@ -13,7 +13,7 @@ if (len(args) != 2):
 wait_time = 3
 # number of max retransmissions for a single subscriber
 retry_times = 4
-url = "http://" + args[1] + ":8000/gpsData/"
+url = "http://{}:8000/gpsData/".format(args[1])
 
 list = Queue(maxsize = 20)
 sender = HttpPostSender()

@@ -22,7 +22,6 @@ def setGpsData(request):
         dbCtr.saveData(Device.__class__, recv.getAllInformations())
         lsCtr.saveData(recv.getAllInformations())
         recv.printData()
-        #print(requests.post("http://logstash:8085", data=recv.getAllInformations()))
         
     return HttpResponse("")
 

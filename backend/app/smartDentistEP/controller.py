@@ -37,8 +37,7 @@ class LogStashController():
     def saveData(self, info):
         extra = {
             'device_id': info["id"],
-            'latitudine': info["pos"].lat,
-            'longitudine': info["pos"].long
+            'device_position' : "{},{}".format(info["pos"].lat,info["pos"].long)
         }
         self.logger.info('Nuova posizione segnalata', extra=extra)
 
