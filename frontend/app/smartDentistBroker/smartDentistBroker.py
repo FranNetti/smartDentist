@@ -2,7 +2,7 @@ import time
 import sys
 from queue import Queue
 from sender import HttpPostSender
-from receiver import MsgReceiver
+from receiver import *
 
 args = sys.argv
 if (len(args) != 2):
@@ -29,6 +29,8 @@ def addNewPublisherData(data):
 
 rcv = MsgReceiver(addNewPublisherData)
 rcv.start()
+update = PollingUpdater(url)
+update.start()
 
 while True:
     # get the item from the queue, if empty wait until it isn't anymore

@@ -27,7 +27,7 @@ class MsgSender(ISender):
             msg += "{}|{}\n".format(key,value)
         while True:
             try:
-                self.rabbitSender.sendMsg(msg)
+                self.rabbitSender.sendMsg(msg, "position")
                 break
                 # if the connection interrupts, log what happend,
                 # recreate the connection and send the message again
