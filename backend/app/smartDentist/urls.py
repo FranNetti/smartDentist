@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^ciao/', views.ciao, name="ciao"),
     url(r'^gpsData/', views.setGpsData, name="gpsData"),
+    url(r'^manageDevice/', views.changeDeviceStatus, name="manageDevice"),
+    url(r'^devStatus/', views.getDeviceStatus, name="devStatus"),
 ]

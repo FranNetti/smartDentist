@@ -17,11 +17,25 @@ class IDbController:
 class DbrController(IDbController):
     
     def saveData(self, model, info):
-        if model == Device.__class__ :
+        if model == Device :
             id = info["id"]
             pos = info["pos"]
             device = Device(device_id = id, lat = pos.lat, long = pos.long)
             device.save()
+            device = DeviceStatus(device_id = id, status = True)
+            device.save()
+        elif model == DeviceStatus :
+            id = info["id"]
+            status = info["status"]
+            device = DeviceStatus.objects.get(device_id = id)
+            device.status = status
+            device.save()
+
+    def getJsonData(self,model):
+        if model == DeviceStatus.__class__:
+            result = {}
+            result["devices"] = list(DeviceStatus.objects.all().values())
+            return result
 
 # Class for a controller that loads data into the logstash
 class LogStashController():

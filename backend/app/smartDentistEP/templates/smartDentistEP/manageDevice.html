@@ -1,0 +1,28 @@
+<!DOCKTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title> Manage Device </title>
+</head>
+<body>
+    <form action="/manageDevice/" method="post">
+        <fieldset>
+            <legend> Device Options </legend>
+            <p>
+                <label for="device_id"> Device ID: </label>
+                <input type="text" id="device_id" name="device_id" required />
+            </p>
+            <p>
+                <span> Select your option: </span>
+                <label><input type="radio" name="operation" value="on" /> Turn ON </label>
+                <label><input type="radio" name="operation" value="off" checked /> Turn OFF </label>
+            </p>
+        </fieldset>
+        <input type="submit" value="Submit" />
+    </form>
+    {% if error %}
+    <br/> <p> {{ error }} </p>
+    {% endif %}
+</body>
+</html>
