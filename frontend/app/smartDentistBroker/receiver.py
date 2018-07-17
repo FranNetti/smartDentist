@@ -19,7 +19,7 @@ class MsgReceiver(IReceiver, CallbackHandler, Thread):
     rabbitRcv = None
     logger = None
     routingKey = "position"
-    
+
     def __init__(self, readData):
         self.action = readData
         self.rabbitRcv = self.createConnection()
@@ -66,8 +66,8 @@ class PollingUpdater(Thread):
 
     def run(self):
         while True:
-            self.getAndUpdate()
             time.sleep(self.waitTime)
+            self.getAndUpdate()
 
     def createConnection(self):
         return RabbitMqHandler("msg_broker")
@@ -76,12 +76,14 @@ class PollingUpdater(Thread):
         r = requests.get(self.url)
         if r.status_code == 200:
             response = r.json()
-            print(response)
             for deviceData in response["devices"]:
                 while True:
                     try:
-                        id = deviceData["id"]
-                        self.rabbitSender.sendMsg(deviceData, "change.{}".format(id))
+                        id = deviceData["device_id"]
+                        msg = "id|{}\nstatus|{}\n".format(id,deviceData["status"])
+                        self.rabbitSender.sendMsg(msg, "forno.{}".format(id))
+                        print("inserito messaggio per forno.{}".format(id))
+                        print("------------------------------------------")
                         break
                         # if the connection interrupts, log what happend,
                         # recreate the connection and send the message again
@@ -89,4 +91,3 @@ class PollingUpdater(Thread):
                          del self.rabbitSender
                          self.logger.log("Connection interrupted with RabbitMq")
                          self.rabbitSender = self.createConnection()
-

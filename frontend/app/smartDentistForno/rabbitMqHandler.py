@@ -28,7 +28,7 @@ class RabbitMqHandler:
                 break
             except ConnectionClosed as e:
                 time.sleep(self.wait_time)
-    
+
     # routingKey => the routing key of the desired message queue
     def sendMsg(self, msg, routingKey):
         conn = pika.BlockingConnection(pika.ConnectionParameters(self.hostName))
@@ -43,11 +43,6 @@ class RabbitMqHandler:
     # callbackObj => an object that implements the interface CallbackHandler
     # routingKey => the routing key of the desired message queue
     def getMsg(self, callbackObj, routingKey):
-
-                #result = channel.queue_declare(exclusive=True)
-        #queue_name = result.method.queue
-
-
         conn = pika.BlockingConnection(pika.ConnectionParameters(self.hostName))
         channel = conn.channel()
         #declare an exchange point where all routes will be routed by a match with the routing key
@@ -62,5 +57,3 @@ class RabbitMqHandler:
         channel.basic_consume(callbackObj.callback,
                               queue = queue_name)
         channel.start_consuming()
-
-

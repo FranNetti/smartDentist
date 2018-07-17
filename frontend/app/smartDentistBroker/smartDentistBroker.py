@@ -7,13 +7,14 @@ from receiver import *
 args = sys.argv
 if (len(args) != 2):
     print("Inserire l'indirizzo IP del server di backend", file=sys.stderr)
-    sys.exit(1) 
+    sys.exit(1)
 
 # max wait time allowed for putting a new element in the queue
 wait_time = 3
 # number of max retransmissions for a single subscriber
 retry_times = 4
 url = "http://{}:8000/gpsData/".format(args[1])
+urlRequest = "http://{}:8000/devStatus/".format(args[1])
 
 list = Queue(maxsize = 20)
 sender = HttpPostSender()
@@ -29,7 +30,7 @@ def addNewPublisherData(data):
 
 rcv = MsgReceiver(addNewPublisherData)
 rcv.start()
-update = PollingUpdater(url)
+update = PollingUpdater(urlRequest)
 update.start()
 
 while True:
@@ -44,5 +45,3 @@ while True:
         result = sender.sendData(url = url, info = data)
         x += 1
     list.task_done()
-
-
