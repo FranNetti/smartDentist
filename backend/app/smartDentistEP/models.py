@@ -22,7 +22,7 @@ class Device(models.Model):
 
 #Class that identifies the device status table inside the databaseclass Device(models.Model):
 class DeviceStatus(models.Model):
-    device_id = models.CharField(max_length=100)
+    device_id = models.CharField(primary_key=True, max_length=100)
     status = models.BooleanField(default=False)
 
     def __str__(self):

@@ -1,5 +1,7 @@
+import json
+
 from django.shortcuts import render
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.shortcuts import render
 
 from .receiver import ReceiveDataDevice
@@ -26,7 +28,7 @@ def setGpsData(request):
         dbCtr.saveData(Device, info)
         lsCtr.saveData(info)
         recv.printData()
-        
+
     return HttpResponse("")
 
 def changeDeviceStatus(request):
@@ -46,13 +48,11 @@ def changeDeviceStatus(request):
                 dbCtr.saveData(DeviceStatus, info)
             except DeviceStatus.DoesNotExist:
                 param["error"] = "The device doesn't exist, insert a correct id"
-        
+
     return render(request, 'smartDentistEP/manageDevice.html', param)
 
 def getDeviceStatus(request):
     assert isinstance(request, HttpRequest)
     data = dbCtr.getJsonData(DeviceStatus)
-        
-    return HttpResponse(data)
 
-
+    return JsonResponse(data)

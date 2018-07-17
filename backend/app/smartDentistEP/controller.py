@@ -15,7 +15,7 @@ class IDbController:
 
 # Class for a controller that manages a relational db
 class DbrController(IDbController):
-    
+
     def saveData(self, model, info):
         if model == Device :
             id = info["id"]
@@ -32,7 +32,7 @@ class DbrController(IDbController):
             device.save()
 
     def getJsonData(self,model):
-        if model == DeviceStatus.__class__:
+        if model == DeviceStatus:
             result = {}
             result["devices"] = list(DeviceStatus.objects.all().values())
             return result
@@ -54,6 +54,3 @@ class LogStashController():
             'device_position' : "{},{}".format(info["pos"].lat,info["pos"].long)
         }
         self.logger.info('Nuova posizione segnalata', extra=extra)
-
-
-
