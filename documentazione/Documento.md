@@ -10,19 +10,12 @@ Azienda: Imola Informatica
 
 Durante la mia esperienza di tirocinio a Imola Informatica sono stato assegnato ad un progetto che aveva lo scopo di realizzare un forno dentistico il quale ogni qual volta eseguisse l'accensione inviasse la sua posizione geografica ad un server per tenere traccia di tutti i suoi spostamenti.
 
-Un forno dentistico è un macchinario che permette di riscaldare a temperature elevate, intorno ai 1300/1600 °C, dei materiali ceramici, permettendo la realizzazione di qualunque tipo di oggetto utile per lo svolgimento del lavoro di un dentista, come protesi, corone, ponti e molto altro. I prezzi variano in base alle dimensioni; per forni ben realizzati e di grosse dimensioni il costo è intorno ai 2000€.
+## Tecnologie
 
-Dato che per dover comunicare la propria posizione il dispositivo deve essere in qualche modo collegato ad una rete internet (questo argomento verrà trattato meglio nei paragrafi successivi) si potrebbe sfruttare l'occasione per rendere l'elemento più smart, inviando anche dati di utilità come temperatura di utilizzo, tempo impiegato per la cottura insieme ad altri dati in modo tale da poter tenere sotto controllo il macchinario e utilizzare questi dati sotto numerosi campi:
-
-- da parte del costruttore per sapere cosa migliorare nelle successive versioni grazie a problematiche che si verificano frequentemente in una certa zona o sotto certe condizioni di utilizzo
-- da parte del consumatore per notare in anticipo possibili rotture e anticipare così la manutenzione, in modo tale da non rovinare il macchinario e poterlo usare più a lungo
-
-## Tecnologie utilizzate
-
-Durante l'attività sono state viste numerose tecnologie.
-Si è inizialmente optato come piattaforma di sviluppo su OpenShift, un Platform as a Service per applicazioni cloud, in modo tale da poter concentrare principalmente il lavoro sullo sviluppo della applicazione, demandando alla piattaforma stessa tutto ciò che riguarda l'ambito di amministrazione del sistema. Successivamente però per facilità di replicazione su un sistema differente si è deciso di lavorare utilizzando i container, nello specifico si è optato per Docker e Docker Compose.
+Come piattaforma di sviluppo si è inizialmente optato per uno sviluppo su OpenShift, un Platform as a Service per applicazioni cloud, in modo tale da poter concentrare principalmente il lavoro sullo sviluppo dell'applicazione, demandando alla piattaforma stessa tutto ciò che riguarda l'ambito di amministrazione del sistema. Successivamente però si è virato in direzione di uno sviluppo sulla piattaforma dei container, così da poter osservare anche una parte di System Administrator; nello specifico si è optato per Docker e Docker Compose.
 Come database per il sistema sono stati analizzati sia database relazionali come PostgreSql che database noSql come MongoDb.
-Lato programmazione si è usato Python per programmare sia sul frontend che sul backend dell'applicazione: nello specifico lato backend si è usato il framework Django per realizzare un server REST, mentre sul frontend si è costruito un broker collegato a un coda di messaggi di tipo RabbitMq per potere gestire l'invio di più dati in contemporanea da parte di forni diversi.
+Lato programmazione si è usato Python per programmare sia sul frontend che sul backend dell'applicazione: lato backend si è usato il framework Django per realizzare un server REST, mentre sul frontend si è costruito un broker collegato a un coda di messaggi di tipo RabbitMq per potere gestire l'invio di più dati in contemporanea da parte di forni diversi.
+Infine per poter realizzare una webApp con cui l'utente finale potesse interagire, si è inserito nel sistema e personalizzato tutto l'ELK Stack, quindi Elasticsearch, Logstash e Kibana.
 
 ## Attività
 
@@ -31,8 +24,8 @@ Lato programmazione si è usato Python per programmare sia sul frontend che sul 
 #### 1. Connessione alla rete
 
 Il primo aspetto da affrontare riguarda l'ottenimento della connessione ad internet del dispositivo, aspetto fondamentale per poter poi comunicare qualunque tipo di dato necessario.
-La connessione può essere ottenuta fisicamente, attraverso quindi l'installazione di una scheda di rete con relativa porta a cui connettere il cavo, e in aggiunta in modalità wireless, per rendere meno invasivo il dispositivo senza dover per forza utilizzare un cavo per la connessione. 
-Non è detto che la connessione sia direttamente disponibile al forno stesso, infatti può presentare un modulo Bluetooth che gli permette di collegarsi alla rete tramite un gateway di un qualsiasi tipo (per esempio un dispositivo mobile).
+La connessione può essere ottenuta fisicamente, attraverso quindi l'installazione di una scheda di rete con relativa porta a cui connettere il cavo, e in aggiunta in modalità wireless, per rendere meno invasivo il dispositivo senza dover essere limitati da un elemento hardware. 
+Non è detto che la connessione sia direttamente disponibile al forno stesso, infatti può presentare un modulo Bluetooth che gli permette di collegarsi alla rete tramite un gateway di un qualsiasi tipo (per esempio un dispositivo mobile) il quale poi comunicherà il dato in questione.
 
 #### 2. Ottenimento della posizione
 
@@ -40,17 +33,17 @@ Per poter ottenere la posizione del dispositivo si possono utilizzare tre metodi
 
 1. tramite installazione di un dispositivo GPS che permette la localizzazione del dispositivo attraverso longitudine e latitudine.
 2. tramite le informazioni di geolocalizzazione ottenute tramite le rete wireless stessa; questo è possibile solamente se è disponibile una rete WiFi, inoltre è anche da considerarare come l'informazione ottenuta non è sempre precisa quanto quella ottenuta dal metodo 1.
-3. tramite la richiesta e la consecutiva risposta da parte dell'utente stesso.
+3. tramite richiesta esplicita all'utente con conseguente risposta.
 
 #### 3. Entità software presenti
 
 Il software all'interno dei forni deve essere sviluppato in due moduli: un modulo che si occupa della raccolta delle informazioni, in questo caso la posizione, e un modulo che invece deve inviare i dati alla unità di memorizzazione tramite la rete. Non è detto che entrambi questi moduli debbano essere presenti all'interno del forno, si possono presentare le seguenti combinazioni:
 
-- entrambi i moduli presenti sul forno
+- entrambi i moduli sono presenti sul forno
 
-- modulo software per la raccolta dei dati tramite il gps presente sul forno + modulo software per l'invio dei dati su un gateway esterno collegato al forno tramite Bluetooth
-- modulo software per la raccolta dei dati presente su un terminale collegato al forno tramite Bluetooth + modulo software per l'invio dei dati presente sul forno
-- entrambi i moduli presenti all'esterno del forno stesso, in questo caso la connessione con il forno serve principalmente per ottenere un identificativo utile a riconoscere il forno.
+- il modulo software per la raccolta dei dati tramite il gps è presente sul forno, mentre il modulo software per l'invio dei dati è installato su un gateway esterno collegato al forno tramite Bluetooth
+- il modulo software per la raccolta dei dati è presente su un terminale collegato al forno tramite Bluetooth, mentre il modulo software per l'invio dei dati è presente sul forno
+- entrambi i moduli sono presenti all'esterno del forno stesso, in questo caso la connessione con il forno serve principalmente per ottenere un identificativo utile a riconoscere il forno.
 
 ![immagine forno1](./immagini/forno1.png)
 
@@ -74,7 +67,7 @@ Il software all'interno dei forni deve essere sviluppato in due moduli: un modul
 
 #### 4. Connessione fra l'entità composta forno e lato cliente
 
-Una volta ottenuta la posizione in uno qualsiasi dei precedenti metodi, sarà compito del dispositivo comunicare i dati con una struttura apposita.
+Una volta ottenuta la posizione in uno qualsiasi dei precedenti metodi, sarà compito del dispositivo comunicare i dati con una struttura apposita. Si possono utilizzare differenti architetture: si parte dal semplice client-server, per passare ad una architettura di tipo Publisher-Subscriber, e terminare ad una architettura sempre di tipo client-server ma più corposa di elementi, quali una webApp per esempio. 
 
 ![struttura client-server](./immagini/client-server.png)
 
@@ -90,53 +83,36 @@ Una volta ottenuta la posizione in uno qualsiasi dei precedenti metodi, sarà co
 
 ### Sviluppo del sistema
 
-Lato frontend si è realizzato un container in grado di gestire un numero indefinito di forni in contemporanea, ciascuno realizzato con un servizio differente; i forni sono stati realizzati attraverso tecnologie differenti: un tipo è rappresentato da una semplice pagina HTML nella quale un form invia i dati della posizione direttamente al server di backend, mentre l'altro è caratterizzato dal fatto di inviare i dati indirettamente al server passando da una coda Rabbit presente come differente servizio sempre all'interno dello stesso container.
-La seconda tipologia di forno è costituita da tre moduli interni: il primo, denominato Retriever, che genera dati randomicamente in modo tale da simulare un possibile modulo GPS, il secondo, denominato Sender, il cui compito è quello di inviare dati alla coda, ed infine un terzo che fa da controller e gestisce gli altri due moduli andando a richiedere periodicamente i dati al Retriever dopo di che li invia tramite il Sender.
+Lato frontend si è realizzato un container in grado di gestire un numero indefinito di forni in contemporanea, ciascuno realizzato con un servizio differente; i forni sono stati realizzati attraverso tecnologie differenti: un tipo è rappresentato da una semplice pagina HTML nella quale un form invia i dati della posizione direttamente al server di backend, mentre l'altro è caratterizzato dall'invio dei dati indirettamente al server passando da una coda Rabbit presente come differente servizio sempre all'interno dello stesso container.
+Questa tipologia di forno è costituita da tre moduli interni: il primo, denominato Retriever, che genera dati randomicamente in modo tale da simulare un possibile modulo GPS, il secondo, denominato Sender, il cui compito è quello di inviare dati alla coda, ed infine un terzo che fa da controller e gestisce gli altri due moduli andando a richiedere periodicamente i dati al Retriever dopo di che li invia tramite il Sender.
+
+![diagramma uml del forno](./immagini/diagrammiUml/ClassDiagramForno.png)
+
 Collegato alla coda è presente un ulteriore servizio, anch'esso scomposto in moduli in modo analogo alla struttura realizzata per i forni: è presente un modulo Receiver che aspetta che dei messaggi siano presenti sulla coda, un secondo modulo, chiamato Sender, che invia i dati al backend attraverso messaggi HTTP, ed infine un controller che aspetta di essere notificato dal Receiver della presenza di un dato nella coda e nel momento stesso in cui avviene preleva i dati e li invia al server tramite il Sender.
 
-Lato backend invece si è realizzato un server Django supportato da un database PostgreSql che ogni qual volta viene contattato ad una determinata pagina tramite una POST salva nel db i dati ricevuti; per poter fornire all'utente finale i dati memorizzati nel db si è realizzata una webApp.
+![diagramma uml del broker](./immagini/diagrammiUml/ClassDiagramBroker.png)
+
+Lato backend invece si è costruito un container contenente un servizio in cui è stato realizzato un server Django supportato da un database PostgreSql, presente in un differente servizio sempre all'interno dello stesso container; ogni qual volta il server viene contattato ad una determinata pagina tramite una POST salva nel db i dati ricevuti.
+Per poter fornire all'utente finale i dati memorizzati nel db si è deciso di inserire all'interno del container l'ELK Stack in cui ciascun elemento fosse un servizio a se stante comunicante con gli altri. Il server, una qual volta ha salvato i dati sul db, tramite Logstash memorizzerà i dati anche su Elasticsearch da cui Kibana, su richiesta dell'utente, andrà a prelevare i dati per visualizzarli su una mappa insieme all'orario in cui il determinato forno ha inviato la sua posizione.
+
+![diagramma uml del backend](./immagini/diagrammiUml/ClassDiagramBackend.png)
 
 La struttura del sistema è rappresentata dalla seguente immagine, dove il numero di forni è puramente indicativo:
 
 ![struttura del sistema](./struttura.png)
 
+Per poter capire meglio come funziona l'invio dei dati da un forno al server di backend si possono vedere i seguenti diagrammi di sequenza
 
+![diagramma di seq 1](./immagini/diagrammiUml/SequenceDiagramFE.png)
+
+![diagramma uml2](./immagini/diagrammiUml/SequenceDiagramBE.png)
 
 ## Conclusioni
 
-In questa parte lo studente trae le conclusioni del lavoro svolto,
-valutando pregi e difetti dell’esperienza e, più specificamente, riassumendo quanto
-appreso.
-
-
-
-## Bibliografia
-
-Questa sezione, opzionale, include i riferimenti a manuali, testi e
-articoli scientifici eventualmente consultati durante il lavoro, ordinati per cognome
-del primo autore.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+L'essere stato assegnato allo sviluppo di un progetto in solitaria è stata, per quanto il progetto non fosse di grosse dimensioni e non avesse particolari difficoltà a livello intuitivo, un'esperienza molto formante perchè mi ha permesso di accedere a nuove conoscenze che all'università non si erano viste o approfondite e che in azienda ho dovuto studiare per poterle usare al meglio; un altro pregio di questa esperienza è stato l'aver visto tutte le fasi di progettazione, partendo da cosa si volesse realizzare, passando per la scelta dell'hardware e di tutte le conseguenze che ciascuna scelta avrebbe comportato, allo studio di diverse architetture, ciascuna con i proprio pregi e difetti, per determinare quale fosse la migliore, per terminare infine con la fase più vista all'università e cioè quella della progettazione e sviluppo software.
+L'essere stato da solo ad affrontare tutti questi elementi è stata una sfida personale molto impegnativa però la disponibilità del tutor aziendale sia via telefono che tramite social ha aiutato nel riuscire a terminare tutto il lavoro assegnatomi. La sua non presenza in azienda è da considerarsi come uno degli elementi negativi perchè in caso contrario certe problematiche che sono accorse durante lo sviluppo o la conoscenza di nuovi elementi sarebbero state risolte molto più velocemente di come è in realtà successo, però allo stesso tempo può essere visto come un elemento positivo, perchè mi ha aiutato nel rendere più solido il mio carattere in situazioni in cui ero chiaramente in difficoltà visto che prima di richiedere il suo aiuto ho cercato più volte di risolvere il problema in solitaria, a volte anche riuscendoci.
+Un altro elemento che in un primo momento avevo visto come elemento negativo è stata la scelta da parte del tutor di spingere molto su certi argomenti che io non conoscessi e che non erano immediati per farmeli apprendere, invece di semplificare una parte dello sviluppo assegnandomi strumenti e/o linguaggi già conosciuti; questa scelta come detto in precedenza inizialmente l'ho vista come un elemento molto negativo e che, non intendo nasconderlo, in certe situazioni non ha aiutato molto nel convincermi a proseguire l'attività in azienda, però a lungo andare ho capito come la sua scelta fosse corretta e che gli argomenti mostratimi erano molto importanti, facendomi rivalutare perciò tutta l'esperienza.
+Complessivamente rintengo questo tirocinio come un'esperienza molto positiva e sono contento di come l'ho affrontata, nonostamente i miei momenti di difficoltà e conseguente lentezza nell'affrontare il problema.
 
 
 
@@ -160,42 +136,11 @@ del primo autore.
 
 # Malacopia
 
-all'interno della quale verranno memorizzati i dati: questa struttura potrebbe essere un database distribuito che memorizzerà l'identificativo della macchina, la sua posizione e data e ora della ricezione dei dati così da sapere quando e dove è stato attivato l'ultima volta.
-
-Sarà poi l'utente ad interfacciarsi con questo database attraverso una applicazione web o addirittura un'applicazione mobile per poter filtrare il determinato macchinario e sapere tutti i vari spostamenti che questo ha effettuato ultimamente o in un dato periodo di tempo.
-
 ![Possibile diagramma casi d'uso del sistema](./immagini/UseCaseDiagram1.png)
 
-### Architettura pub-sub[^1]
+Un forno dentistico è un macchinario che permette di riscaldare a temperature elevate, intorno ai 1300/1600 °C, dei materiali ceramici, permettendo la realizzazione di qualunque tipo di oggetto utile per lo svolgimento del lavoro di un dentista, come protesi, corone, ponti e molto altro. I prezzi variano in base alle dimensioni; per forni ben realizzati e di grosse dimensioni il costo è intorno ai 2000€.
 
-È comoda perchè permette di realizzare un'architettura scalabile e indipendente dal tipo di problema che si sta affrontando.
+Dato che per dover comunicare la propria posizione il dispositivo deve essere in qualche modo collegato ad una rete internet (questo argomento verrà trattato meglio nei paragrafi successivi) si potrebbe sfruttare l'occasione per rendere l'elemento più smart, inviando anche dati di utilità come temperatura di utilizzo, tempo impiegato per la cottura insieme ad altri dati in modo tale da poter tenere sotto controllo il macchinario e utilizzare questi dati sotto numerosi campi:
 
-Pro per il sistema attuale:
-
-- è scalabile, perciò è indipendente dal numero di forni che si possono collegare al sistema e di conseguenza usare per ricevere informazioni.
-- interpone tra i forni e il database una struttura ulteriore, che permette al database di non ricevere informazioni contemporaneamente e creare quindi condizioni di corsa critica nella scrittura
-- in caso di più informazioni inviate dai forni, grazie al concetto intrinseco dell'architettura si potrebbero filtrare le informazioni da memorizzare su diversi database in base al contenuto senza che i forni debbano conoscere la differenza fra un database che contenga solo dati di log e un altro dove vengono memorizzate le informazioni di utilità. Sempre grazie a questo principio di intermediario si dà la possibilità di ottenere informazioni dai forni anche nel caso in cui per una serie di operazioni di mantenimento i database si dovessero scollegare dal sistema per un periodo di tempo
-- permetterebbe di poter considerare un messaggio di log contemporaneamente come due informazioni distinte: sia come nuovo dato da aggiungere al database per aggiornarne l'history, sia per notificare un certo utente, il quale ha deciso di essere notificato, che il forno è stato accesso e renderlo partecipe con poco ritardo e in maniera dinamica, senza che questo si debba per forza collegare ad un sito e verificare i log passati
-
-Contro:
-
-- si va ad aggiungere al sistema un'architettura non necessaria per la natura del problema allo stato attuale
-- si potrebbe causare un certo ritardo nella memorizzazione delle informazioni
-
-Per mantenere una certa astrazione del sistema, la modalità migliore adatta a questo caso è quella type-based.
-
-[^1]: L'argomento è stato analizzato con il documento reperito [a questo indirizzo](https://infoscience.epfl.ch/record/165428/files/10.1.1.10.1076.pdf)
-
-
-
-### Differenze fra database relazionali e database NoSql
-
-|                        |                        Db relazionali                        |                           NoSql db                           |
-| ---------------------- | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| Relazioni              | Le relazioni fra i vari elementi sono presenti e sono l'elemento caratterizzante del sistema; tutti i dati hanno la stessa struttura | Le relazioni possono essere presenti, ma non sono il punto centrale del database in quanto gli elementi possono anche non avere nulla in comune dal punto di vista della struttura interna |
-| Struttura              |                          Verticale                           |                         Orizzontale                          |
-| Scalabilità            |         Poca, dovuta al tipo di struttura impiegata          |                           Elevata                            |
-| Disponibilità dei dati |                   I dati sono disponibili                    | Elevata, è un aspetto principale su cui si basano questi tipi di database |
-| Consistenza dei dati   |                I dati sono sempre consistenti                | Presente ma meno rispetto a quelli relazionali, in questo caso si parla di "Eventuale consistenza": i dati che si leggono in un determinato istante non è detto che siano aggiornati all'ultima versione presente nel database |
-
-## 
+- da parte del costruttore per sapere cosa migliorare nelle successive versioni grazie a problematiche che si verificano frequentemente in una certa zona o sotto certe condizioni di utilizzo
+- da parte del consumatore per notare in anticipo possibili rotture e anticipare così la manutenzione, in modo tale da non rovinare il macchinario e poterlo usare più a lungo

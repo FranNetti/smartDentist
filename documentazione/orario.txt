@@ -19,9 +19,11 @@
 10/07 - 09.00/13.00 + 14.30/18.45 - Aggiunta di un servizio per il frontend dove il forno è realizzato tramite una pagina html;
                                     integrazione del nel backend di elastic search,kibana e logstash per la realizzazione di una webApp
 11/07 - 09.00/13.00 + 14.30/18.30 - Risoluzione di problemi nati con l'inserimento dell'elk stack avvenuto in data 10/07
-12/07 - 09.00/13.00 + 14.30/18.30 - sviluppo della parte di inserimento dei dati tramite logstash
+12/07 - 09.00/13.00 + 14.30/18.30 - Sviluppo della parte di inserimento dei dati tramite logstash
+13/07 - 09.00/13.00 + 14.45/18.15 - Completamento dell'integrazione dell'elk stack nel sistema
+16/07 - 09.00/13.00 + 14.30/18.30 - Sviluppo della documentazione relativa al progetto
 
 
 
-Totale ore:	84.30h
+Totale ore:	100.00h
 
