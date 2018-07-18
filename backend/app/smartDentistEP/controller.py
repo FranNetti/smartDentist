@@ -22,13 +22,22 @@ class DbrController(IDbController):
             pos = info["pos"]
             device = Device(device_id = id, lat = pos.lat, long = pos.long)
             device.save()
-            device = DeviceStatus(device_id = id, status = True)
-            device.save()
         elif model == DeviceStatus :
             id = info["id"]
             status = info["status"]
-            device = DeviceStatus.objects.get(device_id = id)
-            device.status = status
+            device = None
+            try:
+                #if the device exists update its status, otherwise check the status
+                device = DeviceStatus.objects.get(device_id = id)
+                if device.status == status:
+                    raise ValueError("The device is already {}".format("ON" if status else "OFF"))
+                device.status = status
+            except DeviceStatus.DoesNotExist:
+                #if the device is turning on its possible that it's a new device so save it
+                if status:
+                    device = DeviceStatus(device_id = id, status = True)
+                else:
+                    raise
             device.save()
 
     def getJsonData(self,model):

@@ -48,6 +48,8 @@ def changeDeviceStatus(request):
                 dbCtr.saveData(DeviceStatus, info)
             except DeviceStatus.DoesNotExist:
                 param["error"] = "The device doesn't exist, insert a correct id"
+            except ValueError as e:
+                param["error"] = str(e)
 
     return render(request, 'smartDentistEP/manageDevice.html', param)
 
