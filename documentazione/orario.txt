@@ -22,8 +22,10 @@
 12/07 - 09.00/13.00 + 14.30/18.30 - Sviluppo della parte di inserimento dei dati tramite logstash
 13/07 - 09.00/13.00 + 14.45/18.15 - Completamento dell'integrazione dell'elk stack nel sistema
 16/07 - 09.00/13.00 + 14.30/18.30 - Sviluppo della documentazione relativa al progetto
+17/07 - 09.00/13.00 + 14.30/18.30 - Evoluzione del sistema; aggiunta di una pagina per la modifica dello stato dei device
+18/07 - 09.00/13.00
 
 
 
-Totale ore:	100.00h
+Totale ore:	108.00h
 
