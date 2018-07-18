@@ -22,10 +22,10 @@
 12/07 - 09.00/13.00 + 14.30/18.30 - Sviluppo della parte di inserimento dei dati tramite logstash
 13/07 - 09.00/13.00 + 14.45/18.15 - Completamento dell'integrazione dell'elk stack nel sistema
 16/07 - 09.00/13.00 + 14.30/18.30 - Sviluppo della documentazione relativa al progetto
-17/07 - 09.00/13.00 + 14.30/18.30 - Evoluzione del sistema; aggiunta di una pagina per la modifica dello stato dei device
-18/07 - 09.00/13.00
+17/07 - 09.00/13.00 + 14.30/18.30 - Evoluzione del sistema; aggiunta di topic nella message queue e una pagina per la modifica dello stato dei device nel backend
+18/07 - 09.00/13.00 + 14.30/18.30 - implementazione di una richiesta a polling da parte del broker verso il server di backend per sapere se bisogna mutare lo stato dei forni
 
 
 
-Totale ore:	108.00h
+Totale ore:	116.00h
 
