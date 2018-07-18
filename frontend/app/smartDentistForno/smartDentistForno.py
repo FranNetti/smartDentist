@@ -5,6 +5,7 @@ import string
 from sender import MsgSender
 from retriever import RandomRtv
 from receiver import MsgReceiver
+from status import StatusHandler
 from random import choice
 
 args = sys.argv
@@ -14,19 +15,21 @@ if (len(args) < 2):
 
 id = ''.join(choice(string.ascii_uppercase + string.digits) for _ in range(20))
 
-def changeState(data):
-    if(data["id"] == id):
-        status = data["status"]
-        print("status device {}|{}".format(id, status))
-
-waitTime = int(args[1]) * 60;
+waitTime = int(args[1]) * 60 - 60;
 rtv = RandomRtv()
 sender = MsgSender()
-receiver = MsgReceiver(changeState, id)
+statusHandler = StatusHandler(sender, id)
+receiver = MsgReceiver(statusHandler.changeStatus, id)
 receiver.start()
 
+time.sleep(20)
+
 while True:
+    statusHandler.saveStatus(True)
     data = rtv.getData(id)
-    sender.sendData(data)
-    print("device {} | data sent".format(id))
-    time.sleep(waitTime)
+    if statusHandler.isOn():
+        sender.sendData(data)
+        print("device {} | data sent".format(id))
+        time.sleep(60)
+        statusHandler.saveStatus(False)
+    time.sleep(waitTime if waitTime > 0 else 60)

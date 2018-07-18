@@ -19,8 +19,8 @@ class MsgSender(ISender):
 
     def __init__(self):
         self.rabbitSender = self.createConnection()
-        self.logger = FileLogger("fornoLogger.txt")
-    
+        self.logger = FileLogger("app/smartDentistForno/doc/log.txt")
+
     def sendData(self, info):
         msg = ""
         for key, value in info.items():
@@ -36,11 +36,18 @@ class MsgSender(ISender):
                  self.logger.log("Connection interrupted with RabbitMq")
                  self.rabbitSender = self.createConnection()
 
+    def sendStatusChangeApp(self, id, status):
+        msg = "id|{}\nstatus|{}".format(id, status)
+        while True:
+            try:
+                self.rabbitSender.sendMsg(msg, "status.change")
+                break
+                # if the connection interrupts, log what happend,
+                # recreate the connection and send the message again
+            except ConnectionClosed as e:
+                 del self.rabbitSender
+                 self.logger.log("Connection interrupted with RabbitMq")
+                 self.rabbitSender = self.createConnection()
+
     def createConnection(self):
         return RabbitMqHandler("msg_broker")
-            
-            
-            
-            
-
-

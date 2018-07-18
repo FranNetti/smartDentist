@@ -6,7 +6,7 @@ services:
 
   broker:
     build: .
-    command: python3 app/smartDentistBroker/smartDentistBroker.py web
+    command: python3 app/smartDentistBroker/smartDentistBroker.py web:8000
     volumes:
       - .:/code
     depends_on:

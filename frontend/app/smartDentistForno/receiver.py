@@ -20,7 +20,7 @@ class MsgReceiver(IReceiver, CallbackHandler, Thread):
     def __init__(self, readData, id):
         self.action = readData
         self.rabbitRcv = self.createConnection()
-        self.logger = FileLogger("brokerLog.txt")
+        self.logger = FileLogger("app/smartDentistForno/doc/log.txt")
         self.routingKey = "forno.{}".format(id)
         Thread.__init__(self)
 
@@ -34,8 +34,6 @@ class MsgReceiver(IReceiver, CallbackHandler, Thread):
             key, value = row.decode().split("|")
             elem[key] = value
         self.action(elem)
-        print("{} -- dato ricevuto".format(self.routingKey))
-        print("--------------------------------------------")
         ch.basic_ack(delivery_tag = method.delivery_tag)
 
     def getData(self):
