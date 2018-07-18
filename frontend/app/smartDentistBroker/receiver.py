@@ -13,17 +13,16 @@ class IReceiver:
     @abstractclassmethod
     def getData(self): raise NotImplementedError
 
-class MsgReceiver(IReceiver, CallbackHandler, Thread):
+class Receiver(IReceiver, CallbackHandler, Thread):
 
     action = None
     rabbitRcv = None
     logger = None
-    routingKey = "position"
 
     def __init__(self, readData):
         self.action = readData
         self.rabbitRcv = self.createConnection()
-        self.logger = FileLogger("brokerLog.txt")
+        self.logger = FileLogger("app/smartDentistBroker/doc/log.txt")
         Thread.__init__(self)
 
     def run(self):
@@ -51,6 +50,12 @@ class MsgReceiver(IReceiver, CallbackHandler, Thread):
     def createConnection(self):
         return RabbitMqHandler("msg_broker")
 
+class MsgReceiver(Receiver):
+    routingKey = "position"
+
+class StatusChangeDetector(Receiver):
+    routingKey = "status.change"
+
 class PollingUpdater(Thread):
 
     url = ""
@@ -61,7 +66,7 @@ class PollingUpdater(Thread):
     def __init__(self, url):
         self.url = url
         self.rabbitSender = self.createConnection()
-        self.logger = FileLogger("fornoLogger.txt")
+        self.logger = FileLogger("app/smartDentistBroker/doc/log.txt")
         Thread.__init__(self)
 
     def run(self):
@@ -82,8 +87,6 @@ class PollingUpdater(Thread):
                         id = deviceData["device_id"]
                         msg = "id|{}\nstatus|{}\n".format(id,deviceData["status"])
                         self.rabbitSender.sendMsg(msg, "forno.{}".format(id))
-                        print("inserito messaggio per forno.{}".format(id))
-                        print("------------------------------------------")
                         break
                         # if the connection interrupts, log what happend,
                         # recreate the connection and send the message again

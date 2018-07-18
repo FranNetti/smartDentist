@@ -13,8 +13,9 @@ if (len(args) != 2):
 wait_time = 3
 # number of max retransmissions for a single subscriber
 retry_times = 4
-url = "http://{}:8000/gpsData/".format(args[1])
-urlRequest = "http://{}:8000/devStatus/".format(args[1])
+url = "http://{}/gpsData/".format(args[1])
+urlRequest = "http://{}/devStatus/".format(args[1])
+urlUpdate = "http://{}/manageDevice/".format(args[1])
 
 list = Queue(maxsize = 20)
 sender = HttpPostSender()
@@ -28,8 +29,18 @@ def addNewPublisherData(data):
     elem["long"] = data["long"]
     list.put(elem, timeout = wait_time)
 
+# add new data to the blocking queue
+# data = the data sent by the publisher
+def statusDeviceChanged(data):
+    elem = {}
+    elem["device_id"] = data["id"]
+    elem["operation"] = "on" if data["status"] else "off"
+    sender.sendData(url = urlUpdate, info = elem)
+
 rcv = MsgReceiver(addNewPublisherData)
 rcv.start()
+detector = StatusChangeDetector(statusDeviceChanged)
+detector.start()
 update = PollingUpdater(urlRequest)
 update.start()
 
