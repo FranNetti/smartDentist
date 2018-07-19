@@ -24,8 +24,8 @@
 16/07 - 09.00/13.00 + 14.30/18.30 - Sviluppo della documentazione relativa al progetto
 17/07 - 09.00/13.00 + 14.30/18.30 - Evoluzione del sistema; aggiunta di topic nella message queue e una pagina per la modifica dello stato dei device nel backend
 18/07 - 09.00/13.00 + 14.30/18.30 - implementazione di una richiesta a polling da parte del broker verso il server di backend per sapere se bisogna mutare lo stato dei forni
-19/07 - 09.00/13.00
+19/07 - 09.00/13.00 + 14.30/18.30 - implementazione della richiesta a polling anche sul forno html
 
 
-Totale ore:	116.00h
+Totale ore:	124.00h
 
