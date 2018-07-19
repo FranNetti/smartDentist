@@ -4,23 +4,49 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invia i dati</title>
+
+    <link rel="stylesheet" href="./app/smartDentistFornoHttp/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./app/smartDentistFornoHttp/script.js" charset="utf-8"></script>
 </head>
 
-<body>
-    <form method="post" action="http://web:8000/gpsData/">
+<body class="container-fluid">
+  <div class="row">
+    <div id="errore" class="alert alert-danger col-4 text-center mx-auto" role="alert"> </div>
+    <div id="successo" class="alert alert-success col-4 text-center mx-auto" role="alert"> </div>
+  </div>
+  <div class="row">
+    <form class="col-6 mx-auto border border-info rounded">
         <fieldset>
-            <legend> Dati del dispositvo </legend>
-  	        <label for="id">Id dispositivo: </label>
-            <input type="text" name="id" id="id" required/>
-            <br />
-            <label for="lat">Latitudine: </label>
-            <input type="number" name="lat" id="lat" min="-90.00" max="90.00" step="0.01" required/>
-            <br />
-            <label for="long">Longitudine: </label>
-            <input type="number" name="long" id="long" min="-180.00" max="180.00" step="0.01" required/>
+          <legend> Dati del dispositvo </legend>
+          <div class="form-group row">
+            <label for="id" class="col-form-label col-5">Id dispositivo: </label>
+            <div class="col-5">
+              <input type="text" class="form-control" name="id" id="id" required/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="lat" class="col-form-label col-5">Latitudine(compresa tra -90 e 90): </label>
+            <div class="col-5">
+              <input type="number" class="form-control" name="lat" id="lat" min="-90.00" max="90.00" step="0.01" required/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="long" class="col-form-label col-5">Longitudine(compresa tra -180 e 180): </label>
+            <div class="col-5">
+              <input type="number" class="form-control" name="long" id="long" min="-180.00" max="180.00" step="0.01" required/>
+            </div>
+          </div>
         </fieldset>
-        <br />
-        <input type="submit" value="Invia i dati" />
+        <div class="form-group row d-flex justify-content-end">
+          <input class="btn btn-outline-info" id="accendi_spegni" type="button" value="Accendi il dispositivo"/>
+          <input class="btn btn-outline-info" id="invia" type="button" value="Invia i dati"/>
+        </div>
     </form>
+  </div>
 </body>
 </html>

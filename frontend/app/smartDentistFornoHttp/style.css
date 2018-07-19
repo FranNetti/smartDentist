@@ -1,0 +1,11 @@
+body {
+  padding: 1%;
+}
+
+form {
+  padding: 20px;
+}
+
+form input[type="button"]{
+  margin-right: 2%;
+}
