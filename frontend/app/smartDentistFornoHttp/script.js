@@ -66,6 +66,8 @@ function sendPosition(device_id, device_lat, device_long) {
          function(data, status) {
             if (status != "success") {
               showError("Errore nell'invio dei dati - " + status);
+            } else {
+              showSuccess("Posizione inviata");
             }
          });
 }
@@ -109,9 +111,11 @@ $(document).ready(function() {
       sendChangeStatus();
       showSuccess("Device " + (on ? "acceso" : "spento"));
       if(on) {
-        timeout_var = setInterval(updateStatus, 15000);
+        timeout_var = setInterval(updateStatus, 5000);
       } else {
         clearTimeout(timeout_var);
+        $("#lat").val("");
+        $("#long").val("");
       }
     }
   });
