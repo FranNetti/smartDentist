@@ -1,3 +1,4 @@
 Django
 psycopg2-binary
 python-logstash
+django-cors-headers
