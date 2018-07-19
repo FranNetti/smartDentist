@@ -15,7 +15,7 @@ if (len(args) < 2):
 
 id = ''.join(choice(string.ascii_uppercase + string.digits) for _ in range(20))
 
-waitTime = int(args[1]) * 60 - 60;
+waitTime = int(args[1]) #* 60 - 60;
 rtv = RandomRtv()
 sender = MsgSender()
 statusHandler = StatusHandler(sender, id)
@@ -25,11 +25,12 @@ receiver.start()
 time.sleep(20)
 
 while True:
-    statusHandler.saveStatus(True)
     data = rtv.getData(id)
-    if statusHandler.isOn():
+    if statusHandler.hasToLoop():
+        statusHandler.saveStatus(True)
         sender.sendData(data)
         print("device {} | data sent".format(id))
-        time.sleep(60)
+        time.sleep(20)
         statusHandler.saveStatus(False)
-    time.sleep(waitTime if waitTime > 0 else 60)
+        time.sleep(waitTime if waitTime > 0 else 60)
+    time.sleep(10)
